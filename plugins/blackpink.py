@@ -1,7 +1,7 @@
 from pyrogram import filters
 from TheApi import api
 
-from VIPMUSIC import app
+from ANNIEMUSIC import app
 from config import BANNED_USERS
 
 
