@@ -1,8 +1,8 @@
 import random
-from VIPMUSIC.utils.database import get_served_chats
+from ANNIEMUSIC.utils.database import get_served_chats
 from pyrogram import Client, filters
 
-from VIPMUSIC import app
+from ANNIEMUSIC import app
 
 # Define a dictionary to track the last message timestamp for each user
 user_last_message_time = {}
@@ -67,10 +67,10 @@ async def help(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        "✨𝚂𝚄𝙿𝙿𝙾𝚁𝚃✨", url=f"https://t.me/NOBITA_SUPPORT"
+                        "✨𝚂𝚄𝙿𝙿𝙾𝚁𝚃✨", url=f"https://t.me/meradad"
                     ),
                     InlineKeyboardButton(
-                        "✨𝙾𝚆𝙽𝙴𝚁✨", url=f"https://t.me/ll_NOBITA_BOT_DEVLOPER_ll"
+                        "✨𝙾𝚆𝙽𝙴𝚁✨", url=f"https://t.me/Nonsecularowner"
                     ),
                 ]
             ]
@@ -86,10 +86,10 @@ async def help(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        "✨𝚂𝚄𝙿𝙿𝙾𝚁𝚃✨", url=f"https://t.me/NOBITA_SUPPORT"
+                        "✨𝚂𝚄𝙿𝙿𝙾𝚁𝚃✨", url=f"https://t.me/Nonsecularowner"
                     ),
                     InlineKeyboardButton(
-                        "✨𝙾𝚆𝙽𝙴𝚁✨", url=f"https://t.me/ll_NOBITA_BOT_DEVLOPER_ll"
+                        "✨𝙾𝚆𝙽𝙴𝚁✨", url=f"https://t.me/Nonsecularhindu"
                     ),
                 ]
             ]
