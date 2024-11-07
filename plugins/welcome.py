@@ -4,11 +4,11 @@ from PIL import ImageDraw, Image, ImageFont, ImageChops
 from pyrogram import *
 from pyrogram.types import *
 from logging import getLogger
-from VIPMUSIC import LOGGER
+from ANNIEMUSIC import LOGGER
 from pyrogram.types import Message
-from VIPMUSIC.misc import SUDOERS
-from VIPMUSIC import app
-from VIPMUSIC.utils.database import *
+from ANNIEMUSIC.misc import SUDOERS
+from ANNIEMUSIC import app
+from ANNIEMUSIC.utils.database import *
 
 LOGGER = getLogger(__name__)
 
@@ -123,7 +123,7 @@ async def greet_group(_, member: ChatMemberUpdated):
 ● ᴜsᴇʀɴᴀᴍᴇ ➥  @{user.username}
 ● ᴜsᴇʀ ɪᴅ ➥  {user.id}
 
-❖ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ➥ ˹ᴀᴀʀᴜ ꭙ ᴍᴜsɪᴄ˼ ♡゙
+❖ ᴘᴏᴡᴇʀᴇᴅ ʙʏ ➥ ˹Mommy ꭙ Music˼ ♡゙
 ▰▱▱▱▱▱▱▱▱▱▱▱▱▱▰
 """,
 reply_markup=InlineKeyboardMarkup(
