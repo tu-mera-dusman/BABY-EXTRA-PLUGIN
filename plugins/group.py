@@ -1,6 +1,6 @@
 from pyrogram import enums, filters
 
-from VIPMUSIC import app
+from ANNIEMUSIC import app
 from utils.permissions import adminsOnly
 
 
