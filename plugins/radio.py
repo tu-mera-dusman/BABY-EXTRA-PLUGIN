@@ -12,11 +12,11 @@ from pyrogram.errors import (
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup
 
 from config import BANNED_USERS
-from VIPMUSIC import app
-from VIPMUSIC.utils.database import get_assistant, get_cmode, get_lang, get_playmode, get_playtype
-from VIPMUSIC.utils.logger import play_logs
-from VIPMUSIC.utils.stream.stream import stream
-from VIPMUSIC.misc import SUDOERS
+from ANNIEMUSIC import app
+from ANNIEMUSIC.utils.database import get_assistant, get_cmode, get_lang, get_playmode, get_playtype
+from ANNIEMUSIC.utils.logger import play_logs
+from ANNIEMUSIC.utils.stream.stream import stream
+from ANNIEMUSIC.misc import SUDOERS
 
 # Radio Station List
 RADIO_STATION = {
