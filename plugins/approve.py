@@ -2,10 +2,10 @@ from pyrogram import filters
 from pyrogram.enums import ChatMembersFilter
 from pyrogram.types import ChatJoinRequest
 from pyrogram.errors.exceptions.bad_request_400 import UserAlreadyParticipant
-from VIPMUSIC import app
-from VIPMUSIC.core.mongo import mongodb
-from VIPMUSIC.misc import SUDOERS
-from VIPMUSIC.utils.keyboard import ikb
+from ANNIEMUSIC import app
+from ANNIEMUSIC.core.mongo import mongodb
+from ANNIEMUSIC.misc import SUDOERS
+from ANNIEMUSIC.utils.keyboard import ikb
 from utils.permissions import adminsOnly, member_permissions
 
 approvaldb = mongodb.autoapprove
