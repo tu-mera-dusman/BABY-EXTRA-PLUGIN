@@ -1,4 +1,4 @@
-from VIPMUSIC import app
+from ANNIEMUSIC import app
 from pyrogram import filters
 import nekos
 
