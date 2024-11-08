@@ -23,7 +23,7 @@ BOT_TOKEN = getenv("BOT_TOKEN", "")
 MONGO_DB_URI = getenv("MONGO_DB_URI", "")
 STRING_SESSION = getenv("STRING_SESSION", "")
 from ANNIEMUSIC.utils.keyboard import ikb
-from .notes import extract_urls
+from plugins.notes import extract_urls  # Adjusted the import path
 from ANNIEMUSIC.utils.functions import (
     check_format,
     extract_text_and_keyb,
